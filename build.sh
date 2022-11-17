@@ -5,7 +5,7 @@ if [ ! -d "llvm-project" ] ; then
 fi
 echo "1. Finish cloning LLVM!"
 
-echo "2. Building LLVM..."
+echo "2. Config LLVM..."
 cd llvm-project
 mkdir build
 cd build
@@ -16,18 +16,24 @@ cmake -G Ninja \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
     ../llvm 
 
-ninja 
-echo "2. Finish building LLVM!"
+# ninja 
+echo "2. Finish Config LLVM!"
 
 cd ..
 
-echo "3. Applying our branch prediction files and rebuild..."
+echo "3. Applying our branch prediction files and building LLVM..."
 # Copy our implemented LLVM pass files to LLVM project
-patch -p1 < ../branch-predict-pass/llvm.patch 
+
+if ! patch -R -p1 -s -f --dry-run < ../branch-predict-pass/llvm.patch ; then
+  patch -p1 < ../branch-predict-pass/llvm.patch 
+fi
+
+# patch -p1 -R < ../branch-predict-pass/llvm.patch 
+# patch -p1 < ../branch-predict-pass/llvm.patch 
 cp ../branch-predict-pass/*.cpp llvm/lib/Transforms/Instrumentation/
 cp ../branch-predict-pass/*.h llvm/include/llvm/Transforms/Instrumentation/
 
-# rebuild LLVM
+# build LLVM
 cd build 
 ninja 
 
