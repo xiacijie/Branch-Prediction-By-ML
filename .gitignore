@@ -1,3 +1,6 @@
-llvm-project
 *.ll
 *.out
+.idea
+.vscode
+build-vscode
+llvm-project
