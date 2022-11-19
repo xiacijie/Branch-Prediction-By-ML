@@ -1,0 +1,1 @@
+./llvm-project/build/bin/clang++ -Os ./samples/if.cpp -emit-llvm -S -o if.ll
