@@ -7,7 +7,7 @@ export PGO_SUFFIX="bzip2"
 CXXF="-Os -fprofile-instr-generate"
 CXXF2="-Os -fprofile-instr-use=$PROF_DATA -mllvm -collect-dataset"
 
-(cd bzip2/; make clean; make bzip2 -j 8 CFLAGS="$CXXF" LDFLAGS="$CXXF" CC=$CC)
+(cd bzip2/; make clean; make --no-print-directory bzip2 -j 8 CFLAGS="$CXXF" LDFLAGS="$CXXF" CC=$CC)
 (LLVM_PROFILE_FILE=$PROF_RAW ./bzip2/bzip2 $CC -c > /dev/null && $LLVM/llvm-profdata merge -output=$PROF_DATA $PROF_RAW)
-(cd bzip2/; make clean; make bzip2 -j 8 CFLAGS="$CXXF2" CC=$CC)
+(cd bzip2/; make clean; make --no-print-directory bzip2 -j 8 CFLAGS="$CXXF2" CC=$CC)
 

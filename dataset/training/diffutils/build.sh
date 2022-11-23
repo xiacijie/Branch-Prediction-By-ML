@@ -1,3 +1,5 @@
+rm -rf build1 build2 
+
 export PROF_RAW=/tmp/diff.profraw
 export PROF_DATA=/tmp/diff.profdata
 export CC=$LLVM/clang
@@ -9,6 +11,6 @@ CXXF2="-Os -fprofile-instr-use=$PROF_DATA -mllvm -collect-dataset"
 
 (objdump -d /bin/ar > 1.txt; objdump -d /bin/as > 2.txt)
 
-(mkdir -p build1; cd build1; ../diffutils-3.8/configure ; make -j 8 CFLAGS="$CXXF" LDFLAGS="$CXXF" CC=$CC)
+(mkdir -p build1; cd build1; ../diffutils-3.8/configure ; make --no-print-directory -j 8 CFLAGS="$CXXF" LDFLAGS="$CXXF" CC=$CC)
 (LLVM_PROFILE_FILE=$PROF_RAW ./build1/src/diff -d 1.txt 2.txt > /dev/null ; $LLVM/llvm-profdata merge -output=$PROF_DATA $PROF_RAW)
-(mkdir -p build2; cd build2; ../diffutils-3.8/configure ; make -j 8 CFLAGS="$CXXF2" LDFLAGS="$CXXF2" CC=$CC)
+(mkdir -p build2; cd build2; ../diffutils-3.8/configure ; make --no-print-directory -j 8 CFLAGS="$CXXF2" LDFLAGS="$CXXF2" CC=$CC)

@@ -1,3 +1,5 @@
+rm -rf build1 build2 
+
 export PROF_RAW=/tmp/box2d.profraw
 export PROF_DATA=/tmp/box2d.profdata
 export CC=$LLVM/clang

@@ -1,3 +1,5 @@
+rm -rf build1 build2 
+
 export PROF_RAW=/tmp/distorm.profraw
 export PROF_DATA=/tmp/distorm.profdata
 export CC=$LLVM/clang

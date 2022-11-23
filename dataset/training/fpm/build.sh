@@ -1,3 +1,5 @@
+rm -rf build1 build2 
+
 export PROF_RAW=/tmp/fpm.profraw
 export PROF_DATA=/tmp/fpm.profdata
 export CC=$LLVM/clang

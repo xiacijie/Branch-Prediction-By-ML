@@ -1,3 +1,5 @@
+rm -rf build1 build2 
+
 export PROF_RAW=/tmp/myhtml.profraw
 export PROF_DATA=/tmp/myhtml.profdata
 export CC=$LLVM/clang
