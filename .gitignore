@@ -6,3 +6,6 @@ build-vscode
 build1
 build2
 build 
+libtorch
+pybind
+pybind_example
