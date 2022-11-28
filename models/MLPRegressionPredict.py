@@ -2,8 +2,8 @@ import pickle
 import os
 import numpy as np 
 
-model = pickle.load(open(os.getenv("MODEL_ROOT") + "/MLPClassification.model", 'rb'))
-scaler = pickle.load(open(os.getenv("MODEL_ROOT") + "/MLPClassification.scaler", 'rb'))
+model = pickle.load(open(os.getenv("MODEL_ROOT") + "/MLPRegression.model", 'rb'))
+scaler = pickle.load(open(os.getenv("MODEL_ROOT") + "/MLPRegression.scaler", 'rb'))
 
 def predict(X):
     # X is a string here
