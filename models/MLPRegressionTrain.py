@@ -36,6 +36,6 @@ model.fit(train_X_scaled, train_Y)
 preds = model.predict(test_X_scaled)
 
 print("R2 Score: ", r2_score(test_Y, preds))
-print(preds)
-# pickle.dump(model, open(os.getenv("MODEL_ROOT") + "/MLPRegression.model", 'wb'))
-# pickle.dump(scaler, open(os.getenv("MODEL_ROOT") + "/MLPRegression.scaler", 'wb'))
+
+pickle.dump(model, open(os.getenv("MODEL_ROOT") + "/MLPRegression.model", 'wb'))
+pickle.dump(scaler, open(os.getenv("MODEL_ROOT") + "/MLPRegression.scaler", 'wb'))
