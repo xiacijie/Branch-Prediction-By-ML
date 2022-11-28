@@ -4,8 +4,8 @@ if [ ! -d "llvm-project" ] ; then
     git clone --depth 1 https://github.com/xiacijie/llvm-project
 fi
 
-if [ ! -d "llvm-test-suite" ] ; then
-    git clone --depth=1 https://github.com/llvm/llvm-test-suite.git
+if [ ! -d "pybind11" ] ; then
+    git clone git@github.com:pybind/pybind11.git
 fi
 
 echo "1. Finish cloning LLVM!"
@@ -19,6 +19,7 @@ cmake -G Ninja \
     -DLLVM_ENABLE_PROJECTS="clang;compiler-rt;"  \
     -DLLVM_TARGETS_TO_BUILD=X86 \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
+    -DCMAKE_PREFIX_PATH=$LIBTORCH_PATH \
     ../llvm 
 
 ninja 

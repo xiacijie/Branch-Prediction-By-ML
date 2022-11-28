@@ -35,4 +35,5 @@ for i in range(iters):
 predictions = model(test_X)
 print("R2 SCORE: ", r2_score(test_Y.cpu().detach().numpy(), predictions.cpu().detach().numpy()))
 
+model = model.to("cpu")
 torch.save(model.state_dict(), os.getenv("MODEL_ROOT") + "/LinearNN.state_dict")
