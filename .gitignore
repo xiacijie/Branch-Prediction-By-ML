@@ -9,3 +9,5 @@ build
 libtorch
 pybind
 pybind_example
+*.scaler
+*.model
