@@ -21,11 +21,11 @@ test_X_scaled = scaler.transform(test_X.values)
 train_Y = train_Y["left_prob"]
 test_Y = test_Y["left_prob"]
 
-model = MLPRegressor(hidden_layer_sizes=(44,88,128,64),
+model = MLPRegressor(hidden_layer_sizes=(44,88,128,64,32),
     max_iter=30000,
-    activation="relu",
+    activation="tanh",
     learning_rate="adaptive",
-    learning_rate_init=0.005,
+    learning_rate_init=0.0005,
     tol=0.00005,
     verbose=True,
     early_stopping=True,

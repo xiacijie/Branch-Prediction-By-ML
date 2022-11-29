@@ -23,7 +23,7 @@ test_X_scaled = scaler.transform(test_X.values)
 train_Y = train_Y["left_prob"]
 test_Y = test_Y["left_prob"]
 
-model = AdaBoostRegressor(base_estimator=DecisionTreeRegressor(max_depth=16), learning_rate=0.01, n_estimators=50)
+model = AdaBoostRegressor(base_estimator=DecisionTreeRegressor(max_depth=128), learning_rate=0.01, n_estimators=256)
 
 model.fit(train_X_scaled, train_Y)
 preds = model.predict(test_X_scaled)

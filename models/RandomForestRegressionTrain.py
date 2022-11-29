@@ -1,13 +1,11 @@
 import pickle 
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
 import os
-from sklearnex import patch_sklearn 
 
-patch_sklearn()
 
 df = pd.read_csv(os.getenv("DATASET_ROOT") + "/dataset.csv")
 
@@ -24,14 +22,11 @@ test_X_scaled = scaler.transform(test_X.values)
 train_Y = train_Y["left_prob"]
 test_Y = test_Y["left_prob"]
 
-
-model = SVR(kernel="rbf", gamma="scale", C=0.1, verbose=True)
+model = RandomForestRegressor(n_estimators = 512, max_features = 'sqrt', max_depth = 64)
 model.fit(train_X_scaled, train_Y)
-# model = grid.best_estimator_
-# print(model)
+
 preds = model.predict(test_X_scaled)
+print("R2 SCORE: ", r2_score(test_Y, preds))
 
-print("R2 Score: ", r2_score(test_Y, preds))
-
-pickle.dump(model, open(os.getenv("MODEL_ROOT") + "/SVMRegression.model", 'wb'))
-pickle.dump(scaler, open(os.getenv("MODEL_ROOT") + "/SVMRegression.scaler", 'wb'))
+pickle.dump(model, open(os.getenv("MODEL_ROOT") + "/RandomForestRegression.model", 'wb'))
+pickle.dump(scaler, open(os.getenv("MODEL_ROOT") + "/RandomForestRegression.scaler", 'wb'))

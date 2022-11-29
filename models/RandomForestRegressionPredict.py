@@ -2,8 +2,8 @@ import pickle
 import os
 import numpy as np 
 
-model = pickle.load(open(os.getenv("MODEL_ROOT") + "/Adaegression.model", 'rb'))
-scaler = pickle.load(open(os.getenv("MODEL_ROOT") + "/AdaRegression.scaler", 'rb'))
+model = pickle.load(open(os.getenv("MODEL_ROOT") + "/RandomForestRegression.model", 'rb'))
+scaler = pickle.load(open(os.getenv("MODEL_ROOT") + "/RandomForestRegression.scaler", 'rb'))
 
 def predict(X):
     # X is a string here
