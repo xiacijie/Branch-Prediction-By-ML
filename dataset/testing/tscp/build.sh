@@ -1,13 +1,18 @@
-export LLVM=/opt/llvm/bin/
-export PROF_RAW=/tmp/tscp.profraw
-export PROF_DATA=/tmp/tscp.profdata
 export CC=$LLVM/clang
 export CXX=$LLVM/clang++
-export PGO_SUFFIX="tscp"
 
-CXXF="-Os -fprofile-instr-generate -fPIC"
-CXXF2="-Os -fprofile-instr-use=$PROF_DATA -mllvm -stat-prof-reporter"
+BASE="-Os -mllvm -equal-branch-prob"
+MLPC="-Os -mllvm -branch-prob-predict-mlpc"
+MLPR="-Os -mllvm -branch-prob-predict-mlpr"
+SVMR="-Os -mllvm -branch-prob-predict-svmr"
+ADAR="-Os -mllvm -branch-prob-predict-adar"
+RANR="-Os -mllvm -branch-prob-predict-ranr"
 
-(cp -r TSCP/ build1; cd build1/; $CC *.c $CXXF -o tscp)
-(LLVM_PROFILE_FILE=$PROF_RAW ./build1/tscp < note.txt && $LLVM/llvm-profdata merge -output=$PROF_DATA $PROF_RAW)
-(cp -r TSCP/ build2; cd build2/; $CC *.c $CXXF2 -o tscp)
+rm -rf base mlpc mlpr svmr adar ranr 
+
+(cp -r TSCP/ base; cd base/; $CC *.c $BASE -o tscp)
+(cp -r TSCP/ mlpc; cd mlpc/; $CC *.c $MLPC -o tscp)
+(cp -r TSCP/ mlpr; cd mlpr/; $CC *.c $MLPR -o tscp)
+(cp -r TSCP/ svmr; cd svmr/; $CC *.c $SVMR -o tscp)
+(cp -r TSCP/ adar; cd adar/; $CC *.c $ADAR -o tscp)
+(cp -r TSCP/ ranr; cd ranr/; $CC *.c $RANR -o tscp)

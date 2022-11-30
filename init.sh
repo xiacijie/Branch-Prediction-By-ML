@@ -5,5 +5,3 @@ export LLVM=$PROJECT_ROOT/llvm-project/build/bin
 export MODEL_ROOT=$PROJECT_ROOT/models
 export DATASET_ROOT=$PROJECT_ROOT/dataset 
 export LINEAR_NN_MODEL=$MODEL_ROOT/build/LinearNNPredict
-export BASE="-mllvm -equal-branch-prob"
-export FAST="-mllvm -branch-prob-predict-linear"

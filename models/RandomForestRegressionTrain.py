@@ -22,7 +22,7 @@ test_X_scaled = scaler.transform(test_X.values)
 train_Y = train_Y["left_prob"]
 test_Y = test_Y["left_prob"]
 
-model = RandomForestRegressor(n_estimators = 512, max_features = 'sqrt', max_depth = 64)
+model = RandomForestRegressor(n_estimators = 256, max_features = 'sqrt', max_depth = 64)
 model.fit(train_X_scaled, train_Y)
 
 preds = model.predict(test_X_scaled)

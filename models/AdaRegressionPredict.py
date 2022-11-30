@@ -2,7 +2,7 @@ import pickle
 import os
 import numpy as np 
 
-model = pickle.load(open(os.getenv("MODEL_ROOT") + "/Adaegression.model", 'rb'))
+model = pickle.load(open(os.getenv("MODEL_ROOT") + "/AdaRegression.model", 'rb'))
 scaler = pickle.load(open(os.getenv("MODEL_ROOT") + "/AdaRegression.scaler", 'rb'))
 
 def predict(X):

@@ -1,14 +1,35 @@
-export CC=$LLVM/clang
-export CXX=$LLVM/clang++
+rm -rf result.txt
 
-rm -rf build1 build2 
+avg_time() {
+    #
+    # usage: avg_time n command ...
+    #
+    n=$1; shift
+    (($# > 0)) || return                   # bail if no command given
+    for ((i = 0; i < n; i++)); do
+        { time -p "$@" &>/dev/null; } 2>&1 # ignore the output of the command
+                                           # but collect time's output in stdout
+    done | awk '
+        /real/ { real = real + $2; nr++ }
+        /user/ { user = user + $2; nu++ }
+        /sys/  { sys  = sys  + $2; ns++}
+        END    {
+                 if (nr>0) printf("real %f\n", real/nr);
+                 if (nu>0) printf("user %f\n", user/nu);
+                 if (ns>0) printf("sys %f\n",  sys/ns)
+               }'
+}
 
-export BASE="-mllvm -equal-branch-prob"
-export FAST="-mllvm -branch-prob-predict-mlpr"
-
-(mkdir -p build1; cd build1; cmake -G Ninja ../z3 -DCMAKE_CXX_FLAGS="$FAST" && ninja)
-(mkdir -p build2; cd build2; cmake -G Ninja ../z3 -DCMAKE_CXX_FLAGS="$BASE" && ninja)
-(time -p ./build2/z3 ./input.txt)
-(time -p ./build1/z3 ./input.txt)
-
+echo -e "\n base\n" >> result.txt 
+(avg_time 10 ./base/z3 ./input.txt >> result.txt )
+echo -e "\n mlpc\n">> result.txt 
+(avg_time 10  ./mlpc/z3 ./input.txt >> result.txt )
+echo -e "\n mlpr\n">> result.txt 
+(avg_time 10 ./mlpr/z3 ./input.txt >> result.txt )
+echo -e "\n svmr\n">> result.txt 
+(avg_time 10  ./svmr/z3 ./input.txt >> result.txt )
+echo -e "\n adar\n">> result.txt 
+(avg_time 10  ./adar/z3 ./input.txt >> result.txt )
+echo -e "\n ranr\n">> result.txt 
+(avg_time 10  ./ranr/z3 ./input.txt >> result.txt )
 

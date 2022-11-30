@@ -1,15 +1,20 @@
-export LLVM=/opt/llvm/bin/
-export PROF_RAW=/tmp/libpng.profraw
-export PROF_DATA=/tmp/libpng.profdata
 export CC=$LLVM/clang
 export CXX=$LLVM/clang++
 export SRC=libpng-1.6.37/
-export PGO_SUFFIX="libpng"
 
-CXXF="-Os -fprofile-instr-generate"
-CXXF2="-Os -fprofile-instr-use=$PROF_DATA -mllvm -stat-prof-reporter"
+BASE="-Os -mllvm -equal-branch-prob"
+MLPC="-Os -mllvm -branch-prob-predict-mlpc"
+MLPR="-Os -mllvm -branch-prob-predict-mlpr"
+SVMR="-Os -mllvm -branch-prob-predict-svmr"
+ADAR="-Os -mllvm -branch-prob-predict-adar"
+RANR="-Os -mllvm -branch-prob-predict-ranr"
+RL=-DCMAKE_BUILD_TYPE=Release
 
-(mkdir -p build1; cd build1;../$SRC/configure CFLAGS="$CXXF" LDFLAGS="$CXXF" && make -j 8)
-(LLVM_PROFILE_FILE=$PROF_RAW ./build1/pngvalid && $LLVM/llvm-profdata merge -output=$PROF_DATA $PROF_RAW)
-(mkdir -p build2; cd build2;  ../$SRC/configure CFLAGS="$CXXF2" && make -j 8)
+rm -rf base mlpc mlpr svmr adar ranr 
 
+(mkdir -p base; cd base; ../$SRC/configure CFLAGS="$BASE" $RL && make -j 8)
+(mkdir -p mlpc; cd mlpc; ../$SRC/configure CFLAGS="$MLPC" $RL && make -j 8)
+(mkdir -p mlpr; cd mlpr; ../$SRC/configure CFLAGS="$MLPR" $RL && make -j 8)
+(mkdir -p svmr; cd svmr; ../$SRC/configure CFLAGS="$SVMR" $RL && make -j 8)
+(mkdir -p adar; cd adar; ../$SRC/configure CFLAGS="$ADAR" $RL && make -j 8)
+(mkdir -p ranr; cd ranr; ../$SRC/configure CFLAGS="$RANR" $RL && make -j 8)

@@ -11,3 +11,10 @@ pybind
 pybind_example
 *.scaler
 *.model
+base 
+mlpc 
+mlpr 
+svmr 
+adar 
+ranr
+result.txt

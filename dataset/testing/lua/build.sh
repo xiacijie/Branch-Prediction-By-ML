@@ -1,15 +1,18 @@
-export LLVM=/opt/llvm/bin/
-export PROF_RAW=/tmp/lua.profraw
-export PROF_DATA=/tmp/lua.profdata
 export CC=$LLVM/clang
 export CXX=$LLVM/clang++
-export PGO_SUFFIX="lua"
 
-CXXF="-Os -fprofile-instr-generate"
-CXXF2="-Os -fprofile-instr-use=$PROF_DATA -mllvm -stat-prof-reporter"
+BASE="-Os -mllvm -equal-branch-prob"
+MLPC="-Os -mllvm -branch-prob-predict-mlpc"
+MLPR="-Os -mllvm -branch-prob-predict-mlpr"
+SVMR="-Os -mllvm -branch-prob-predict-svmr"
+ADAR="-Os -mllvm -branch-prob-predict-adar"
+RANR="-Os -mllvm -branch-prob-predict-ranr"
 
-(cd lua-5.4.3; make clean; make -j 8 MYCFLAGS="$CXXF" LDFLAGS="$CXXF" CC=$CC)
-(LLVM_PROFILE_FILE=$PROF_RAW ./lua-5.4.3/src/lua sort.lua && $LLVM/llvm-profdata merge -output=$PROF_DATA $PROF_RAW)
-(cd lua-5.4.3; make clean; make -j 8 MYCFLAGS="$CXXF2"                CC=$CC)
+rm -rf base mlpc mlpr svmr adar ranr 
 
-
+(cp -r lua-5.4.3 base; cd base; make clean; make -j 8 MYCFLAGS="$BASE" CC=$CC)
+(cp -r lua-5.4.3 mlpc; cd mlpc; make clean; make -j 8 MYCFLAGS="$MLPC" CC=$CC)
+(cp -r lua-5.4.3 mlpr; cd mlpr; make clean; make -j 8 MYCFLAGS="$MLPR" CC=$CC)
+(cp -r lua-5.4.3 svmr; cd svmr; make clean; make -j 8 MYCFLAGS="$SVMR" CC=$CC)
+(cp -r lua-5.4.3 adar; cd adar; make clean; make -j 8 MYCFLAGS="$ADAR" CC=$CC)
+(cp -r lua-5.4.3 ranr; cd ranr; make clean; make -j 8 MYCFLAGS="$RANR" CC=$CC)

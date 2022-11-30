@@ -19,7 +19,6 @@ cmake -G Ninja \
     -DLLVM_ENABLE_PROJECTS="clang;compiler-rt;"  \
     -DLLVM_TARGETS_TO_BUILD=X86 \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
-    -DCMAKE_PREFIX_PATH=$LIBTORCH_PATH \
     ../llvm 
 
 ninja 

@@ -1,14 +1,20 @@
-export LLVM=/opt/llvm/bin/
-export PROF_RAW=/tmp/sela.profraw
-export PROF_DATA=/tmp/sela.profdata
 export CC=$LLVM/clang
 export CXX=$LLVM/clang++
-export PGO_SUFFIX="sela"
+
+BASE="-Os -mllvm -equal-branch-prob"
+MLPC="-Os -mllvm -branch-prob-predict-mlpc"
+MLPR="-Os -mllvm -branch-prob-predict-mlpr"
+SVMR="-Os -mllvm -branch-prob-predict-svmr"
+ADAR="-Os -mllvm -branch-prob-predict-adar"
+RANR="-Os -mllvm -branch-prob-predict-ranr"
+
+rm -rf base mlpc mlpr svmr adar ranr 
 
 RL=-DCMAKE_BUILD_TYPE=Release
-CXXF="-fprofile-instr-generate"
-CXXF2="-fprofile-instr-use=$PROF_DATA -mllvm -stat-prof-reporter"
 
-(mkdir -p build1; cd build1; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$CXXF" $RL && ninja)
-(LLVM_PROFILE_FILE=$PROF_RAW ./build1/selatests ./input.txt && $LLVM/llvm-profdata merge -output=$PROF_DATA $PROF_RAW)
-(mkdir -p build2; cd build2; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$CXXF2" $RL && ninja)
+(mkdir -p base; cd base; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$BASE" $RL && ninja)
+(mkdir -p mlpc; cd mlpc; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$MLPC" $RL && ninja)
+(mkdir -p mlpr; cd mlpr; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$MLPR" $RL && ninja)
+(mkdir -p svmr; cd svmr; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$SVMR" $RL && ninja)
+(mkdir -p adar; cd adar; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$ADAR" $RL && ninja)
+(mkdir -p ranr; cd ranr; cmake -G Ninja ../sela -DCMAKE_CXX_FLAGS="$RANR" $RL && ninja)
