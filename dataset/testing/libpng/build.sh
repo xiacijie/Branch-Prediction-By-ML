@@ -8,7 +8,7 @@ MLPR="-Os -mllvm -branch-prob-predict-mlpr"
 SVMR="-Os -mllvm -branch-prob-predict-svmr"
 ADAR="-Os -mllvm -branch-prob-predict-adar"
 RANR="-Os -mllvm -branch-prob-predict-ranr"
-RL=-DCMAKE_BUILD_TYPE=Release
+# RL=-DCMAKE_BUILD_TYPE=Release
 
 rm -rf base mlpc mlpr svmr adar ranr 
 
