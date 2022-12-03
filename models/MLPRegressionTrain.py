@@ -1,10 +1,12 @@
 import pickle 
 import pandas as pd
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import r2_score
 import os
+from Plot import plot_learning_curves
 
 df = pd.read_csv(os.getenv("DATASET_ROOT") + "/dataset.csv")
 
@@ -30,6 +32,11 @@ model = MLPRegressor(hidden_layer_sizes=(44,88,128,64,32),
     verbose=True,
     early_stopping=True,
     solver="adam")
+
+print("Plot learning curve...")
+plot_learning_curves(model, train_X_scaled, train_Y, 5, "r2", "MLPRegression")
+print("Finish plotting learning curve...")
+
 
 model.fit(train_X_scaled, train_Y)
 

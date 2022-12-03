@@ -1,0 +1,1 @@
+$LLVM/clang++ -Os ./samples/if.cpp -mllvm -equal-branch-prob -emit-llvm -S -o if.ll

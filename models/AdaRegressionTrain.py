@@ -6,6 +6,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.metrics import r2_score
 import os
+from Plot import plot_learning_curves
 
 
 df = pd.read_csv(os.getenv("DATASET_ROOT") + "/dataset.csv")
@@ -24,6 +25,10 @@ train_Y = train_Y["left_prob"]
 test_Y = test_Y["left_prob"]
 
 model = AdaBoostRegressor(base_estimator=DecisionTreeRegressor(max_depth=128), learning_rate=0.01, n_estimators=256)
+
+print("Plot learning curve...")
+plot_learning_curves(model, train_X_scaled, train_Y, 5, "r2", "AdaBoostRegression")
+print("Finish plotting learning curve...")
 
 model.fit(train_X_scaled, train_Y)
 preds = model.predict(test_X_scaled)

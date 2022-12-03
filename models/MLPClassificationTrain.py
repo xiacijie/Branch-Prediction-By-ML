@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 import numpy as np 
 import pickle
 import os
+from Plot import plot_learning_curves
 
 from sklearn.neural_network import MLPClassifier
 df = pd.read_csv(os.getenv("DATASET_ROOT") + "/dataset.csv")
@@ -32,6 +33,10 @@ model = MLPClassifier(hidden_layer_sizes=(44,88,128,64),
     verbose=True,
     early_stopping=True,
     solver="adam")
+
+print("Plot learning curve...")
+plot_learning_curves(model, train_X_scaled, train_Y_labels, 5, "accuracy", "MLPClassification")
+print("Finish plotting learning curve...")
 
 model.fit(train_X_scaled, train_Y_labels)
 

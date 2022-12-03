@@ -6,7 +6,7 @@ from sklearn.svm import SVR
 from sklearn.metrics import r2_score
 import os
 from sklearnex import patch_sklearn 
-
+from Plot import plot_learning_curves
 patch_sklearn()
 
 df = pd.read_csv(os.getenv("DATASET_ROOT") + "/dataset.csv")
@@ -26,9 +26,13 @@ test_Y = test_Y["left_prob"]
 
 
 model = SVR(kernel="rbf", gamma="scale", C=0.1, verbose=True)
+
+print("Plot learning curve...")
+plot_learning_curves(model, train_X_scaled, train_Y, 5, "r2", "SVMRegression")
+print("Finish plotting learning curve...")
+
+
 model.fit(train_X_scaled, train_Y)
-# model = grid.best_estimator_
-# print(model)
 preds = model.predict(test_X_scaled)
 
 print("R2 Score: ", r2_score(test_Y, preds))

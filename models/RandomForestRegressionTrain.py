@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
 import os
-
+from Plot import plot_learning_curves
 
 df = pd.read_csv(os.getenv("DATASET_ROOT") + "/dataset.csv")
 
@@ -23,6 +23,11 @@ train_Y = train_Y["left_prob"]
 test_Y = test_Y["left_prob"]
 
 model = RandomForestRegressor(n_estimators = 256, max_features = 'sqrt', max_depth = 64)
+
+print("Plot learning curve...")
+plot_learning_curves(model, train_X_scaled, train_Y, 5, "r2", "RandomForestRegression")
+print("Finish plotting learning curve...")
+
 model.fit(train_X_scaled, train_Y)
 
 preds = model.predict(test_X_scaled)

@@ -1,1 +1,0 @@
-./llvm-project/build/bin/clang++ -Os ./samples/if.cpp -mllvm -branch-prob-predict-ranr -emit-llvm -S -o if.ll

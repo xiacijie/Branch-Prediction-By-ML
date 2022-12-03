@@ -1,6 +1,6 @@
 rm -rf ./dataset.csv
 
-for d in ./training/* ; do
+for d in ./* ; do
     echo "Building Dataset " $d 
     (cd $d; ./build.sh || true)
 done
