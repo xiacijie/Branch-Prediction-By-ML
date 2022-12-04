@@ -1,5 +1,11 @@
 # Branch-Prediction-By-ML
 
+# 0. Clone the project:
+
+`git clone git@github.com:xiacijie/Branch-Prediction-By-ML.git`
+
+`cd Branch-Prediction-By-ML`
+
 # 1. Build the project:
 `source init.sh` - Config the environment variables
 
