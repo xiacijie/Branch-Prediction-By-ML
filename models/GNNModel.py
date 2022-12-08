@@ -150,7 +150,7 @@ model.to(device)
 dataset = GraphDataset(args.dataset)
 n_train = int(len(dataset.graphs) * 0.8)
 train_set, test_set = torch.utils.data.random_split(dataset.graphs, [n_train, len(dataset.graphs) - n_train])
-torch.save([train_set, test_set], "graphdata.th")
+# torch.save([train_set, test_set], "graphdata.th")
 
 loss_fn = torch.nn.BCELoss()
 optim = torch.optim.Adam(model.parameters(), lr=1e-4)
